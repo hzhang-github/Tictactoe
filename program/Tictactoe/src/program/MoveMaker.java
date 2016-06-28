@@ -14,6 +14,19 @@ public class MoveMaker {
 		failedHistory = new ArrayList<String>();
 	}
 	
+	public int getARamdonMove(List<Integer> availMoves)
+	{
+		int size = availMoves.size();
+		if(size == 1)
+			return availMoves.get(0);
+		
+		Random randomGen = new Random();
+		int newmoveind = randomGen.nextInt(size);
+		int move = availMoves.get(newmoveind);
+		
+		return move;
+	}
+	
 	public int getBestMoveFrom(List<Integer> allMoves, List<Integer> availMoves)
 	{
 		if(failedHistory.size() < 1)
@@ -43,19 +56,19 @@ public class MoveMaker {
 		{
 			String pastmoves0 = failedHistory.get(i);
 			String pastmoves = pastmoves0;
-			if(pastmoves.equals(newmoves))
+			if(pastmoves != null && (pastmoves.startsWith(newmoves) || pastmoves.equals(newmoves)))
 				return true;
 			
 			pastmoves = rotate(pastmoves0, 90);
-			if(pastmoves != null && pastmoves.equals(newmoves))
+			if(pastmoves != null && (pastmoves.startsWith(newmoves) || pastmoves.equals(newmoves)))
 				return true;
 			
 			pastmoves = rotate(pastmoves0, 180);
-			if(pastmoves != null && pastmoves.equals(newmoves))
+			if(pastmoves != null && (pastmoves.startsWith(newmoves) || pastmoves.equals(newmoves)))
 				return true;
 			
 			pastmoves = rotate(pastmoves0, 270);
-			if(pastmoves != null && pastmoves.equals(newmoves))
+			if(pastmoves != null && (pastmoves.startsWith(newmoves) || pastmoves.equals(newmoves)))
 				return true;
 		}
 		
@@ -105,19 +118,6 @@ public class MoveMaker {
 		}
 		
 		return Position.converTo1DPos(pos2dnew);
-	}
-	
-	private int getARamdonMove(List<Integer> availMoves)
-	{
-		int size = availMoves.size();
-		if(size == 1)
-			return availMoves.get(0);
-		
-		Random randomGen = new Random();
-		int newmoveind = randomGen.nextInt(size);
-		int move = availMoves.get(newmoveind);
-		
-		return move;
 	}
 	
 	private String listToString(List<Integer> list)
